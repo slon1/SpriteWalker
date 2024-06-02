@@ -32,12 +32,12 @@ public class Control : MonoBehaviour
         grid= new Grid (sprite,cellsize,Color.black);
         screen.Init(sprite, cellsize);
         pathfinding = new Pathfinding(grid);
-        player.Init(screen.GetCellScreenPosition(12,6),60);
+        player.Init(screen.GetCellScreenPosition(12,6));
 
 		
 	}
 	
-	void Update()
+	void Update1()
     {
 		if (Input.GetMouseButtonDown(0)) {
             var tt = screen.GetCell(Input.mousePosition);
@@ -58,11 +58,11 @@ public class Control : MonoBehaviour
 
         }
 	}
-    void OnDrawGizmos() {
-       grid?.DrawGizmos(cellsize);
-    }
+    //void OnDrawGizmos() {
+    //   grid?.DrawGizmos(cellsize);
+    //}
 	private void OnDestroy() {
 		grid=null;
-        pathfinding.Dispose();
+        pathfinding?.Dispose();
 	}
 }

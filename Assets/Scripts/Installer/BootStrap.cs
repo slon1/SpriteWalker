@@ -6,6 +6,6 @@ using Zenject;
 public class BootStrap : MonoInstaller
 {
 	public override void InstallBindings() {
-		print(11);
+		
 	}
 }

@@ -7,7 +7,7 @@ public enum PlayerState {
 	Idle,
 	Go
 }
-
+[Serializable]
 public class Player : MonoBehaviour  {
 	public Vector2 dir;
 	public float speed, rotationSpeed;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour  {
 	public Transform go;
 
 	private void Update() {
-		if (state == PlayerState.Go && waypoints.Count > 0) {
+		if (state == PlayerState.Go && waypoints.Count >=0) {
 			MoveToNextWaypoint();
 		}
 	}
@@ -48,10 +48,22 @@ public class Player : MonoBehaviour  {
 		dir = direction;
 	}
 
-	internal void Init(Vector2 pos, int speed) {
+	//public static Player Deserialize(string json) {
+	//	PlayerData data = JsonUtility.FromJson<PlayerData>(json);
+	//	Player player = playerTransform.gameObject.AddComponent<Player>();
+	//	player.dir = data.dir;
+	//	player.speed = data.speed;
+	//	player.rotationSpeed = data.rotationSpeed;
+	//	player.state = data.state;
+	//	player.waypoints = data.waypoints;
+		
+	//	return player;
+	//}
+
+	internal void Init(Vector2 pos) {
 		go.position = pos;
 		//go = sprite.GetComponent<SpriteRenderer>().transform;        
-		this.speed = speed;
+		
 	}
 	private void OnDestroy() {
 		waypoints.Clear();

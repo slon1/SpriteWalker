@@ -31,14 +31,14 @@ namespace View {
 
 		//	Gizmos.color = Color.black;
 
-		
+
 		//	for (int x = 0; x <= numCellsX; x++) {
 		//		Vector3 start = new Vector3(spritePosition.x + x * worldCellSize.x - spriteSize.x / 2, spritePosition.y - spriteSize.y / 2, 0);
 		//		Vector3 end = new Vector3(spritePosition.x + x * worldCellSize.x - spriteSize.x / 2, spritePosition.y + spriteSize.y / 2, 0);
 		//		Gizmos.DrawLine(start, end);
 		//	}
 
-		
+
 		//	for (int y = 0; y <= numCellsY; y++) {
 		//		Vector3 start = new Vector3(spritePosition.x - spriteSize.x / 2, spritePosition.y + y * worldCellSize.y - spriteSize.y / 2, 0);
 		//		Vector3 end = new Vector3(spritePosition.x + spriteSize.x / 2, spritePosition.y + y * worldCellSize.y - spriteSize.y / 2, 0);
@@ -56,7 +56,9 @@ namespace View {
 		//		}
 		//	}
 		//}
-
+		public Vector2 GetCellScreenPosition(Vector2Int pos) {
+			return GetCellScreenPosition(pos.x, pos.y);
+		}
 		public Vector2 GetCellScreenPosition(int x, int y) {
 			return spritePosition + new Vector2(x * worldCellSize.x + worldCellSize.x * 0.5f - spriteSize.x * 0.5f,
 															  y * worldCellSize.y + worldCellSize.y * 0.5f - spriteSize.y * 0.5f);
@@ -65,7 +67,7 @@ namespace View {
 
 		public Vector2Int GetCell(Vector2 screenPos) {
 			Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, Camera.main.nearClipPlane));
-			Vector2 localPos = worldPos - (Vector3)spritePosition + new Vector3(spriteSize.x / 2, spriteSize.y / 2, 0);
+			Vector2 localPos = worldPos - (Vector3)spritePosition + new Vector3(spriteSize.x * 0.5f, spriteSize.y * 0.5f, 0);
 			int cellX = Mathf.FloorToInt(localPos.x / worldCellSize.x);
 			int cellY = Mathf.FloorToInt(localPos.y / worldCellSize.y);
 			return new Vector2Int(cellX, cellY);

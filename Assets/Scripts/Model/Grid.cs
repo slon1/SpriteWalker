@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-namespace Model {
-	[Serializable]
+namespace Model {	
 	public class Grid : IDisposable{
-		private Cell[,] cells;
-
+		private Cell[,] cells;		
 		private int width { get; set; }
 		private int height { get; set; }
 		private Color unwalkableColor;
-
+		//todo !=null !=(0,0)
 		public Grid(Sprite sprite, Vector2 cellSize, Color unwalkableColor) {
 			this.unwalkableColor = unwalkableColor;
 			GenerateGrid(sprite, cellSize);
+			
 		}
 
 		private void GenerateGrid(Sprite sprite, Vector2 cellSize) {
@@ -79,29 +78,29 @@ namespace Model {
 		}
 
 
-		public void DrawGizmos(Vector2 cellSize) {
-			if (!Application.isPlaying) return;
-			Gizmos.color = Color.green;
-			Vector3 cellSize3D = new Vector3(cellSize.x, cellSize.y, 1);
+		//public void DrawGizmos(Vector2 cellSize) {
+		//	if (!Application.isPlaying) return;
+		//	Gizmos.color = Color.green;
+		//	Vector3 cellSize3D = new Vector3(cellSize.x, cellSize.y, 1);
 
-			GUIStyle style = new GUIStyle {
-				normal = { textColor = Color.black }
-			};
+		//	GUIStyle style = new GUIStyle {
+		//		normal = { textColor = Color.black }
+		//	};
 
-			foreach (var cell in GetAllCells()) {
-				Vector3 cellCenter = new Vector3(cell.x * cellSize.x + cellSize.x / 2, cell.y * cellSize.y + cellSize.y / 2, 0);
-				if (cell.isUnwalkable) {
-					Gizmos.color = Color.red;
-					Gizmos.DrawWireCube(cellCenter, cellSize3D);
-				}
-				else {
-					Gizmos.color = Color.green;
-					Gizmos.DrawWireCube(cellCenter, cellSize3D);
-				}
+		//	foreach (var cell in GetAllCells()) {
+		//		Vector3 cellCenter = new Vector3(cell.x * cellSize.x + cellSize.x * 0.5f, cell.y * cellSize.y + cellSize.y * 0.5f, 0);
+		//		if (cell.isUnwalkable) {
+		//			Gizmos.color = Color.red;
+		//			Gizmos.DrawWireCube(cellCenter, cellSize3D);
+		//		}
+		//		else {
+		//			Gizmos.color = Color.green;
+		//			Gizmos.DrawWireCube(cellCenter, cellSize3D);
+		//		}
 
-				Handles.Label(cellCenter, $"({cell.x},{cell.y})", style);
-			}
-		}
+		//		Handles.Label(cellCenter, $"({cell.x},{cell.y})", style);
+		//	}
+		//}
 
 		public void Dispose() {
 			cells = null;

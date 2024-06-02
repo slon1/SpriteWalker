@@ -11,15 +11,15 @@ namespace Utils {
 			saveLoadContext = new SaveLoadContext(localStrategy);
 		}
 		public async void SaveGame(string data) {
-			string path = Application.persistentDataPath + "/savegame.txt"; // ”кажите нужный путь
+			string path = Application.persistentDataPath + "/savegame.txt";
 			await saveLoadContext.SaveDataAsync(data, path);
 		}
 
 		public async void LoadGame() {
-			string path = Application.persistentDataPath + "/savegame.txt"; // ”кажите нужный путь
+			string path = Application.persistentDataPath + "/savegame.txt"; 
 			string data = await saveLoadContext.LoadDataAsync(path);
 
-			// ќбработайте загруженные данные
+			
 		}
 
 

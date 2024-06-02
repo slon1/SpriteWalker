@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 
-namespace Model {
-	[Serializable]
+namespace Model {	
 	public class Cell {
 		public int x;
 		public int y;
