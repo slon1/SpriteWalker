@@ -95,20 +95,24 @@ public class GameManager : MonoBehaviour {
 	private void OnEnable() {
 		input.OnInputReceived += Input_OnInputReceived;
 	}
-
+	Cell lastWP;
 	private void Input_OnInputReceived(Vector2 screenXY) {
 		//var tt = view.GetCell(screenXY);
 		//print(grid.GetCell(screen.GetCell(Input.mousePosition)).isUnwalkable);
-		var start = grid.GetCell(view.GetCell(Camera.main.WorldToScreenPoint(player.go.position)));
-		var path = pathfinding.FindPath(start, grid.GetCell(view.GetCell(screenXY)));		
-		if (path != null) {
-			var list = new List<Vector2>();
-			foreach (var item in path) {				
-				var position = view.GetCellScreenPosition(item.x, item.y);
-				list.Add(position);
+		
+			var start = (lastWP == null)?grid.GetCell(view.GetCell(Camera.main.WorldToScreenPoint(player.go.position))):lastWP;
+			var path = pathfinding.FindPath(start, grid.GetCell(view.GetCell(screenXY)));
+			if (path != null) {
+				var list = new List<Vector2>();
+				foreach (var item in path) {
+					var position = view.GetCellScreenPosition(item.x, item.y);
+					list.Add(position);
+				}
+				player.SetWayPoints(list);
+				lastWP=path[path.Count-1];
 			}
-			player.SetWayPoints(list);
-		}
+		
+		
 	}
 
 	private void OnDisable() {

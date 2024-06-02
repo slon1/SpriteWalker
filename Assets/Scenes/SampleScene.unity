@@ -1592,6 +1592,7 @@ MonoBehaviour:
   level: {fileID: 4838800833271648982, guid: 8d5700fb8a79e3f4baa557f4d0f2aa42, type: 3}
   cellsize: {x: 6, y: 6}
   border: {r: 0, g: 0, b: 0, a: 1}
+  playerPos: {x: 2, y: 2}
 --- !u!114 &1881662002
 MonoBehaviour:
   m_ObjectHideFlags: 0
