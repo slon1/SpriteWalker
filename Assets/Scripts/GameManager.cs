@@ -1,43 +1,14 @@
+using Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using View;
-using Model;
 using Zenject;
 using Grid = Model.Grid;
-using System;
-using static Cinemachine.DocumentationSortingAttribute;
-using UnityEngine.Windows;
-using Zenject.SpaceFighter;
-using Server;
-using System.Threading.Tasks;
-using Unity.VisualScripting.FullSerializer;
-using NUnit.Framework.Internal.Commands;
-
-[Serializable]
-public class PlayerData {
-	public Vector2 dir;
-	public float speed;
-	public float rotationSpeed;
-	public PlayerState state;
-	public List<Vector2> waypoints;
-}
-[Serializable]
-public class GameData {
-	//public PlayerData playerData;
-	public float playerSpeed = 10;
-	public float playerRotationSpeed = 10;
-	public string boardUrl;
-	public bool useUrl;
-	public Sprite board;
-	public int boardPPU = 100;
-	public Vector2Int playerStart;
-	public Vector2Int cellsize = new Vector2Int(1, 1);
-	public int maxWaypoints = 2048;
-	public Color border = Color.black;
-}
-
+/// <summary>
+/// Manages the game state, initialization, and interactions between different components.
+/// </summary>
 public class GameManager : MonoBehaviour {
 	public enum GameState { Loading, MainMenu, Gameplay, Exit }
 	private GameState currentState;
@@ -46,10 +17,7 @@ public class GameManager : MonoBehaviour {
 	private Player player;
 	private VirtualScreen view;
 	private Grid grid;
-
-
 	private GameConfig config;
-
 	private Pathfinding pathfinding;
 	private MouseOrTouchInput input;
 	private PlayerData playerData;
@@ -83,7 +51,7 @@ public class GameManager : MonoBehaviour {
 			case GameState.Loading:
 				StartCoroutine(LoadingRoutine());
 				break;
-			case GameState.MainMenu:
+			case GameState.MainMenu:				
 				uiManager.ShowMainMenu();
 				break;
 			case GameState.Gameplay:
@@ -96,14 +64,6 @@ public class GameManager : MonoBehaviour {
 				break;
 		}
 	}
-
-	//public async Task<Sprite> LoadSprite(string path, int ppu) {		
-	//	var texture = await server.HttpGetTextureAsync(path);
-	//	Rect rect = new Rect(0, 0, texture.width, texture.height);
-	//	Vector2 pivot = new Vector2(0.5f, 0.5f);		
-	//	return Sprite.Create(texture, rect, pivot, ppu);		
-
-	//}
 
 
 	private async void StartGame() {		
@@ -122,33 +82,17 @@ public class GameManager : MonoBehaviour {
 
 		view.Init(gameData.board, gameData.cellsize);
 
-		player.Init(view.GetCellScreenPosition(gameData.playerStart));
-		player.speed = gameData.playerSpeed;
-		player.rotationSpeed = gameData.playerRotationSpeed;
-
-
-		
-
+		player.Init(view.GetCellScreenPosition(gameData.playerStart), gameData.playerSpeed, gameData.playerRotationSpeed);
 
 
 	}
 	public void Save() {
-		playerData = new PlayerData();
-		playerData.state = player.state;
-		playerData.dir=player.dir;
-		playerData.waypoints= player.waypoints;
-		playerData.speed=player.speed;
-		playerData.rotationSpeed=player.rotationSpeed;
 		
-		saveSystem.SaveGame(JsonUtility.ToJson(playerData));
+		saveSystem.SaveGame(JsonUtility.ToJson(player.GetGameData()));
 	}
 	public async void Load() {
-		var t= JsonUtility.FromJson<PlayerData> (await saveSystem.LoadGame());
-		player.dir = t.dir;
-		player.waypoints = t.waypoints;
-		player.speed = t.speed;
-		player.rotationSpeed = t.rotationSpeed;
-		player.state=t.state;
+		var data= JsonUtility.FromJson<PlayerData> (await saveSystem.LoadGame());
+		player.LoadFromGameData(data);
 
 
 
@@ -184,7 +128,7 @@ public class GameManager : MonoBehaviour {
 
 	private IEnumerator LoadingRoutine() {
 		float elapsedTime = 0f;
-		while (elapsedTime < 1) {
+		while (elapsedTime < 3) {
 			uiManager.Spin.transform.Rotate(-Vector3.forward, 500 * Time.deltaTime);
 			elapsedTime += Time.deltaTime;
 			yield return null;

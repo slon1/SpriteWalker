@@ -13,7 +13,7 @@ public class Pathfinding : IDisposable {
 	public List<Cell> FindPath(Cell startCell, Cell targetCell) {		
 
 		if (startCell == null || targetCell == null || startCell.isUnwalkable || targetCell.isUnwalkable) {
-			return null; // Path cannot be found
+			return null; 
 		}
 
 		List<Cell> openList = new List<Cell> { startCell };
@@ -39,7 +39,7 @@ public class Pathfinding : IDisposable {
 					continue;
 				}
 
-				float tentativeGCost = gCosts[current] + 1; // Assuming uniform cost for simplicity
+					float tentativeGCost = gCosts[current] + 1;
 
 				if (!openList.Contains(neighbor)) {
 					openList.Add(neighbor);
@@ -54,11 +54,11 @@ public class Pathfinding : IDisposable {
 			}
 		}
 
-		return null; // Path not found
+		return null; 
 	}
 
 	private float Heuristic(Cell a, Cell b) {
-		return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // Manhattan distance
+		return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); 
 	}
 
 	private Cell GetCellWithLowestFCost(List<Cell> cells, Dictionary<Cell, float> fCosts) {
@@ -75,8 +75,8 @@ public class Pathfinding : IDisposable {
 		List<Cell> neighbors = new List<Cell>();
 
 		int[,] directions = {
-			{ 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }, // Cardinal directions
-            { -1, 1 }, { 1, 1 }, { 1, -1 }, { -1, -1 } // Diagonal directions
+			{ 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }, 
+            { -1, 1 }, { 1, 1 }, { 1, -1 }, { -1, -1 } 
         };
 
 		for (int i = 0; i < directions.GetLength(0); i++) {

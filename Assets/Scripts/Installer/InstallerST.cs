@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
-using Model;
-using Grid = Model.Grid;
-using View;
-using Utils;
 using Server;
+using Utils;
+using View;
+using Zenject;
 
 public class InstallerST : MonoInstaller
 {

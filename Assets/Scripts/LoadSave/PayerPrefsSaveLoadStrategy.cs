@@ -1,9 +1,9 @@
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-
+/// <summary>
+/// Provides a strategy for storing and loading data locally using playerprefs.
+/// </summary>
 public class PayerPrefsSaveLoadStrategy : ISaveLoadStrategy {
 	
 	public async Task Save(string data, string path) {

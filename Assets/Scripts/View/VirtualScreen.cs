@@ -4,12 +4,10 @@ using UnityEditor;
 using UnityEngine.U2D;
 using System.Runtime.CompilerServices;
 namespace View {
-	public class VirtualScreen : MonoBehaviour {
-		//private Sprite sprite;
-		private Vector2 cellSize; // Размер ячеек в пикселях		
+	public class VirtualScreen : MonoBehaviour {		
+		private Vector2 cellSize;	
 		private Vector2 spriteSize;
-		private Vector2 spritePosition;
-		
+		private Vector2 spritePosition;		
 		private Vector2 worldCellSize;
 
 		public void Init(Sprite sprite, Vector2 cellSize) {

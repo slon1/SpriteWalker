@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameData:
     playerSpeed: 10
-    playerRotationSpeed: 10
+    playerRotationSpeed: 20
     boardUrl: \Assets\Sprites\Levels\maze2.png
     useUrl: 0
     board: {fileID: 109971904683980034, guid: 6dbca8e7050fe1b41a4bea4ddbf47a37, type: 3}
     boardPPU: 100
     playerStart: {x: 4, y: 4}
     cellsize: {x: 32, y: 32}
-    maxWaypoints: 2048
     border: {r: 0, g: 0, b: 0, a: 1}

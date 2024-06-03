@@ -12,16 +12,8 @@ namespace Server {
 		private CancellationTokenSource tokenSource;
 		public long responseCode { get; set; }	
 
-
 		private void Awake() {
 			tokenSource = new CancellationTokenSource();
-
-		}
-
-		private async void Start() {
-			//string rr = await HttpGetAsync("https://drive.google.com/uc?export=download&id=1GyrEyr6HNW7FZg0EsCO0FWwYtEH32IkL");
-			//string rr = await HttpGetAsync("https://drive.google.com/uc?export=download&id=15XcCpG8ajLuvbFCtdaem2YOo2-TZ3ZUy");
-			//15XcCpG8ajLuvbFCtdaem2YOo2-TZ3ZUy
 
 		}
 
@@ -43,8 +35,7 @@ namespace Server {
 							return webRequest.responseCode == 200;
 						}
 						responseCode = webRequest.responseCode;
-					}
-					
+					}			
 			
 			
 			return false;
@@ -96,8 +87,6 @@ namespace Server {
 			}
 			return null;
 		}
-
-
 
 		private void OnDestroy() {
 			tokenSource?.Cancel();

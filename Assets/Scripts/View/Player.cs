@@ -7,12 +7,14 @@ public enum PlayerState {
 	Idle,
 	Go
 }
-[Serializable]
+/// <summary>
+/// Represents a player in the game, capable of moving between waypoints with a specified speed and rotation speed.
+/// </summary>
 public class Player : MonoBehaviour  {
-	public Vector2 dir;
-	public float speed, rotationSpeed;
-	public PlayerState state = PlayerState.Idle;
-	public List<Vector2> waypoints = new List<Vector2>();
+	private Vector2 dir;
+	private float speed, rotationSpeed;
+	private PlayerState state = PlayerState.Idle;
+	private List<Vector2> waypoints = new List<Vector2>();
 	public Transform go;
 
 	private void Update() {
@@ -20,14 +22,14 @@ public class Player : MonoBehaviour  {
 			MoveToNextWaypoint();
 		}
 	}
-	//todo add wp add trace
+	
 	public void SetWayPoints(List<Vector2> newWaypoints) {
 		waypoints.AddRange(newWaypoints);
 		if (state == PlayerState.Idle) {
 			state = PlayerState.Go;
 		}
 	}
-	//todo rotation
+	
 	private void MoveToNextWaypoint() {
 		if (waypoints.Count == 0) {
 			state = PlayerState.Idle;
@@ -39,7 +41,8 @@ public class Player : MonoBehaviour  {
 		Vector2 direction = (target - currentPosition).normalized;
 
 		go.position = Vector2.MoveTowards(currentPosition, target, speed * Time.deltaTime);
-		//go.rotation = Quaternion.Slerp(go.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
+		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+		go.rotation = Quaternion.Lerp(go.rotation, Quaternion.Euler(0, 0, angle), rotationSpeed * Time.deltaTime);
 
 		if (Vector2.SqrMagnitude(currentPosition - target) < 0.1f) {
 			waypoints.RemoveAt(0);
@@ -47,25 +50,39 @@ public class Player : MonoBehaviour  {
 
 		dir = direction;
 	}
+	public void LoadFromGameData(PlayerData data) {
+		dir = data.dir;
+		if (dir != Vector2.zero) {
+			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+			go.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+		}
+		waypoints =data.waypoints;
+		speed = data.speed;
+		rotationSpeed = data.rotationSpeed;
+		go.position = data.position;
+		state=data.state;
+	}
+	public PlayerData GetGameData() {
+		PlayerData data = new PlayerData();
+		data.dir = dir;
+		data.waypoints = waypoints;
+		data.speed=speed  ;
+		data.rotationSpeed = rotationSpeed;
+		data.position= go.position ;
+		data.state= state;
+		return data;
+	}
 
-	//public static Player Deserialize(string json) {
-	//	PlayerData data = JsonUtility.FromJson<PlayerData>(json);
-	//	Player player = playerTransform.gameObject.AddComponent<Player>();
-	//	player.dir = data.dir;
-	//	player.speed = data.speed;
-	//	player.rotationSpeed = data.rotationSpeed;
-	//	player.state = data.state;
-	//	player.waypoints = data.waypoints;
-		
-	//	return player;
-	//}
+	internal void Init(Vector2 pos, float speed, float rotationSpeed) {
+		go.position = pos;		    
+		this.speed=speed;
+		this.rotationSpeed = rotationSpeed;
 
-	internal void Init(Vector2 pos) {
-		go.position = pos;
-		//go = sprite.GetComponent<SpriteRenderer>().transform;        
-		
 	}
 	private void OnDestroy() {
 		waypoints.Clear();
+		go = null;
 	}
+
+	
 }

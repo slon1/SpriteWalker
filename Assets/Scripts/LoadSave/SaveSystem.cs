@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 namespace Utils {
+	/// <summary>
+	/// Manages the saving and loading of game data using various save/load strategies.
+	/// </summary>
 	public class SaveSystem : MonoBehaviour {
 
 		private SaveLoadContext saveLoadContext;

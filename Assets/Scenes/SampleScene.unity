@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &29916352
 RectTransform:
   m_ObjectHideFlags: 0
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9619972, b: 0.57169807, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -473,7 +473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &304769610
 RectTransform:
   m_ObjectHideFlags: 0
@@ -649,7 +649,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.3137255, b: 0.21568629, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1083,7 +1083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9607844, g: 0.92549026, b: 0.54901963, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1566,7 +1566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1690140400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1829,14 +1829,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1881661992}
-  - component: {fileID: 1881661996}
+  - component: {fileID: 1881662004}
   - component: {fileID: 1881661998}
+  - component: {fileID: 1881661996}
   - component: {fileID: 1881661999}
   - component: {fileID: 1881662003}
   - component: {fileID: 1881662002}
   - component: {fileID: 1881662000}
   - component: {fileID: 1881662001}
-  - component: {fileID: 1881662004}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -1883,11 +1883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bedfb395eeafc4682674a0c0139b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dir: {x: 0, y: 0}
-  speed: 50
-  rotationSpeed: 20
-  state: 0
-  waypoints: []
   go: {fileID: 1847137092}
 --- !u!114 &1881661999
 MonoBehaviour:

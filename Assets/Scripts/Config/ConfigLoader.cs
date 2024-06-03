@@ -1,10 +1,10 @@
 using Server;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
-
+/// <summary>
+/// Class for loading configuration data from either remote server or local source.
+/// </summary>
 public class ConfigLoader : MonoBehaviour
 {
     private ServerClient server;
@@ -19,7 +19,7 @@ public class ConfigLoader : MonoBehaviour
     [SerializeField]
     private GameConfig localConfig;
 	
-	public async Task<Sprite> LoadSprite(string path, int ppu) {
+	private async Task<Sprite> LoadSprite(string path, int ppu) {
 		var texture = await server.HttpGetTextureAsync(path);
 		Rect rect = new Rect(0, 0, texture.width, texture.height);
 		Vector2 pivot = new Vector2(0.5f, 0.5f);
