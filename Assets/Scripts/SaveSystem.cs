@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 namespace Utils {
 	public class SaveSystem : MonoBehaviour {
@@ -16,11 +17,10 @@ namespace Utils {
 			await saveLoadContext.SaveDataAsync(data, path);
 		}
 
-		public async void LoadGame() {
-			string path = Application.persistentDataPath + "/savegame.txt"; 
-			string data = await saveLoadContext.LoadDataAsync(path);
+		public async Task<string> LoadGame() {
+			string path = Application.persistentDataPath + "/savegame.txt";
+			return await saveLoadContext.LoadDataAsync(path);
 
-			
 		}
 
 

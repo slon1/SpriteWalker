@@ -1,15 +1,17 @@
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class PayerPrefsSaveLoadStrategy : ISaveLoadStrategy {
-	private string id = Application.productName.Trim();
+	
 	public async Task Save(string data, string path) {
-		PlayerPrefs.SetString(id,data);
+		PlayerPrefs.SetString(Path.GetFileName(path),data);
 	}
 
 	public async Task<string> Load(string path) {
-		return PlayerPrefs.GetString(id);
+		return PlayerPrefs.GetString(Path.GetFileName(path));
 	}
 	
 }

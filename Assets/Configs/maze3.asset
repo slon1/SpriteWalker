@@ -16,7 +16,7 @@ MonoBehaviour:
     playerSpeed: 10
     playerRotationSpeed: 10
     boardUrl: \Assets\Sprites\Levels\maze3.png
-    useUrl: 1
+    useUrl: 0
     board: {fileID: 873262601918949901, guid: bac57390c7b923446b0b707b711e0ded, type: 3}
     boardPPU: 50
     playerStart: {x: 22, y: 22}

@@ -6,6 +6,7 @@ using Model;
 using Grid = Model.Grid;
 using View;
 using Utils;
+using Server;
 
 public class InstallerST : MonoInstaller
 {
@@ -15,6 +16,8 @@ public class InstallerST : MonoInstaller
 	public MouseOrTouchInput input;
 	public VirtualScreen view;
 	public Player player;
+	public ServerClient server;
+	public ConfigLoader config;
 	public override void InstallBindings() {
 			Container.Bind<SaveSystem>().FromInstance(saveLoad).AsSingle();
 			Container.Bind<GameManager>().FromInstance(gameManager).AsSingle();
@@ -22,6 +25,7 @@ public class InstallerST : MonoInstaller
 			Container.Bind<MouseOrTouchInput>().FromInstance(input).AsSingle();
 			Container.Bind<VirtualScreen>().FromInstance(view).AsSingle();
 			Container.Bind<Player>().FromInstance(player).AsSingle();
-		
+			Container.Bind<ServerClient>().FromInstance(server).AsSingle();
+			Container.Bind<ConfigLoader>().FromInstance(config).AsSingle();
 	}
 }
