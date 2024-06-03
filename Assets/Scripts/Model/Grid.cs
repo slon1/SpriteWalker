@@ -78,29 +78,29 @@ namespace Model {
 		}
 
 
-		//public void DrawGizmos(Vector2 cellSize) {
-		//	if (!Application.isPlaying) return;
-		//	Gizmos.color = Color.green;
-		//	Vector3 cellSize3D = new Vector3(cellSize.x, cellSize.y, 1);
+		public void DrawGizmos(Vector2 cellSize) {
+			if (!Application.isPlaying) return;
+			Gizmos.color = Color.green;
+			Vector3 cellSize3D = new Vector3(cellSize.x, cellSize.y, 1);
 
-		//	GUIStyle style = new GUIStyle {
-		//		normal = { textColor = Color.black }
-		//	};
+			GUIStyle style = new GUIStyle {
+				normal = { textColor = Color.black }
+			};
 
-		//	foreach (var cell in GetAllCells()) {
-		//		Vector3 cellCenter = new Vector3(cell.x * cellSize.x + cellSize.x * 0.5f, cell.y * cellSize.y + cellSize.y * 0.5f, 0);
-		//		if (cell.isUnwalkable) {
-		//			Gizmos.color = Color.red;
-		//			Gizmos.DrawWireCube(cellCenter, cellSize3D);
-		//		}
-		//		else {
-		//			Gizmos.color = Color.green;
-		//			Gizmos.DrawWireCube(cellCenter, cellSize3D);
-		//		}
+			foreach (var cell in GetAllCells()) {
+				Vector3 cellCenter = new Vector3(cell.x * cellSize.x + cellSize.x * 0.5f, cell.y * cellSize.y + cellSize.y * 0.5f, 0);
+				if (cell.isUnwalkable) {
+					Gizmos.color = Color.red;
+					Gizmos.DrawWireCube(cellCenter, cellSize3D);
+				}
+				else {
+					Gizmos.color = Color.green;
+					Gizmos.DrawWireCube(cellCenter, cellSize3D);
+				}
 
-		//		Handles.Label(cellCenter, $"({cell.x},{cell.y})", style);
-		//	}
-		//}
+				Handles.Label(cellCenter, $"({cell.x},{cell.y})", style);
+			}
+		}
 
 		public void Dispose() {
 			cells = null;

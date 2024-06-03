@@ -7,8 +7,9 @@ namespace Utils {
 		private SaveLoadContext saveLoadContext;
 		void Awake() {
 			ISaveLoadStrategy localStrategy = new LocalSaveLoadStrategy();
-			ISaveLoadStrategy remoteStrategy = new RemoteSaveLoadStrategy();			
-			saveLoadContext = new SaveLoadContext(localStrategy);
+			ISaveLoadStrategy remoteStrategy = new RemoteSaveLoadStrategy();
+			ISaveLoadStrategy playerPrefsStrategy = new PayerPrefsSaveLoadStrategy();
+			saveLoadContext = new SaveLoadContext(playerPrefsStrategy);
 		}
 		public async void SaveGame(string data) {
 			string path = Application.persistentDataPath + "/savegame.txt";

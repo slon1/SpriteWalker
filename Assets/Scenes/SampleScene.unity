@@ -862,7 +862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &962929142
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1553,14 +1553,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881661989}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6c3f67d94bba5c458accade6946cc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   reconnectCount: 3
   reconnectTime: 3
-  texture: {fileID: 0}
 --- !u!114 &1881662000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,10 +1588,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2709991ba45805a409944181c9183414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 4838800833271648982, guid: 8d5700fb8a79e3f4baa557f4d0f2aa42, type: 3}
-  cellsize: {x: 6, y: 6}
-  border: {r: 0, g: 0, b: 0, a: 1}
-  playerPos: {x: 2, y: 2}
+  config: {fileID: 11400000, guid: ffed3e81aeacba241aca39978ea884c2, type: 2}
+  server: {fileID: 1881661999}
 --- !u!114 &1881662002
 MonoBehaviour:
   m_ObjectHideFlags: 0

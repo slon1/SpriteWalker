@@ -10,14 +10,30 @@ using System;
 using static Cinemachine.DocumentationSortingAttribute;
 using UnityEngine.Windows;
 using Zenject.SpaceFighter;
+using Server;
+using System.Threading.Tasks;
 
 [Serializable]
 public class PlayerData {
 	public Vector2 dir;
 	public float speed;
-	public float rotationSpeed;
+	public float rotationSpeed;	
 	public PlayerState state;
 	public List<Vector2> waypoints;
+}
+[Serializable]
+public class GameData {
+	//public PlayerData playerData;
+	public float playerSpeed=10;
+	public float playerRotationSpeed=10;
+	public string boardUrl;
+	public bool useUrl;
+	public Sprite board;
+	public int boardPPU = 100;
+	public Vector2Int playerStart;
+	public Vector2Int cellsize=new Vector2Int(1,1);
+	public int maxWaypoints=2048;
+	public Color border=Color.black;
 }
 
 public class GameManager : MonoBehaviour {
@@ -28,14 +44,9 @@ public class GameManager : MonoBehaviour {
 	private Player player;
 	private VirtualScreen view;
 	private Grid grid;
+	
 	[SerializeField]
-	private Sprite level;
-	[SerializeField]
-	private Vector2 cellsize;
-	[SerializeField]
-	private Color border= Color.black;
-	[SerializeField]
-	private Vector2Int playerPos;
+	GameConfig config;
 
 	private Pathfinding pathfinding;
 	private MouseOrTouchInput input;
@@ -79,18 +90,53 @@ public class GameManager : MonoBehaviour {
 				break;
 		}
 	}
+	public ServerClient server;
+	private GameObject boardGo;
+	public async Task<Sprite> LoadSprite(string path, int ppu) {		
+		var texture = await server.HttpGetTextureAsync(path);
+		Rect rect = new Rect(0, 0, texture.width, texture.height);
+		Vector2 pivot = new Vector2(0.5f, 0.5f);		
+		return Sprite.Create(texture, rect, pivot, ppu);		
+		
+	}
+	private Sprite level;
+	private async void StartGame() {
+		var ttt= await server.HttpGetAsync("https://drive.google.com/uc?export=download&id=15XcCpG8ajLuvbFCtdaem2YOo2-TZ3ZUy");
+		GameData gd = JsonUtility.FromJson<GameData>(ttt);
+		config.gameData= gd;
+		Sprite level;
+		if (config.gameData.useUrl) {
+			var path = "file://" + Environment.CurrentDirectory + config.gameData.boardUrl;
+			level = await LoadSprite(config.gameData.boardUrl, config.gameData.boardPPU);
+		}else {
+			level = config.gameData.board;
+		}
 
-	private void StartGame() {		
-		grid = new Grid(level, cellsize, border);
+		boardGo = new GameObject("Board");
+		var sr = boardGo.AddComponent<SpriteRenderer>();
+		sr.sortingOrder = -10;
+		sr.sprite = level;
+
+		grid = new Grid(level, config.gameData.cellsize, config.gameData.border);
+
 		input.Enable = true;
+		
 		pathfinding = new Pathfinding(grid);
-		view.Init(level, cellsize);		
-		player.Init(view.GetCellScreenPosition(playerPos));
+		
+		view.Init(level, config.gameData.cellsize);
+		
+		player.Init(view.GetCellScreenPosition(config.gameData.playerStart));
+		player.speed = config.gameData.playerSpeed;
+		player.rotationSpeed = config.gameData.playerRotationSpeed;
+		
 
+		//saveSystem.SaveGame(JsonUtility.ToJson(player, true));
+		
+		print(JsonUtility.ToJson(config.gameData, true));
 
-
-		//print(JsonUtility.ToJson(player,true));
-
+	}
+	private void OnDrawGizmos1() {
+		grid?.DrawGizmos(config.gameData.cellsize);
 	}
 	private void OnEnable() {
 		input.OnInputReceived += Input_OnInputReceived;
@@ -129,6 +175,8 @@ public class GameManager : MonoBehaviour {
 		ChangeState(GameState.MainMenu);
 	}
 	private void OnDestroy() {
+		Destroy(level);
+		Destroy(boardGo);
 		grid?.Dispose();
 		pathfinding?.Dispose();
 		StopAllCoroutines();

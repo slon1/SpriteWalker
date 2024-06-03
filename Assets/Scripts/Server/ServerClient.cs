@@ -28,14 +28,15 @@ namespace Server {
 
 		private void Awake() {
 			tokenSource = new CancellationTokenSource();
-			
+
 		}
 
 
-
 		private async void Start() {
-			string rr = await HttpGetAsync("https://drive.google.com/uc?export=download&id=1GyrEyr6HNW7FZg0EsCO0FWwYtEH32IkL");
-		
+			//string rr = await HttpGetAsync("https://drive.google.com/uc?export=download&id=1GyrEyr6HNW7FZg0EsCO0FWwYtEH32IkL");
+			//string rr = await HttpGetAsync("https://drive.google.com/uc?export=download&id=15XcCpG8ajLuvbFCtdaem2YOo2-TZ3ZUy");
+			//15XcCpG8ajLuvbFCtdaem2YOo2-TZ3ZUy
+
 		}
 
 		public async Task<bool> HttpPostAsync(string domain, string page, string json) {
@@ -65,11 +66,11 @@ namespace Server {
 			}
 			return false;
 		}
-		public Texture2D texture;
 
-		public async Task<string> HttpGetAsync(string domain) {
+
+		public async Task<Texture2D> HttpGetTextureAsync(string domain) {
+			Texture2D texture;
 			CancellationToken token = tokenSource.Token;
-
 
 			string url = domain;
 			using (UnityWebRequest webRequest = UnityWebRequestTexture.GetTexture(url)) {
@@ -84,19 +85,39 @@ namespace Server {
 				}
 				if (webRequest.result == UnityWebRequest.Result.Success) {
 
-					print(webRequest.downloadHandler.text);
 					texture = DownloadHandlerTexture.GetContent(webRequest);
-					return webRequest.responseCode == 200 ? webRequest.downloadHandler.text : null;
+					return texture;
 
 				}
+			}
+			return null;
+		}
+		public async Task<string> HttpGetAsync(string domain) {
+			Texture2D texture;
+			CancellationToken token = tokenSource.Token;
 
+			string url = domain;
+			using (UnityWebRequest webRequest = UnityWebRequest.Get(url)) {
 
+				var operation = webRequest.SendWebRequest();
+				while (!operation.isDone && !token.IsCancellationRequested) {
+					await Task.Delay(100);
+				}
+				if (token.IsCancellationRequested) {
+					webRequest.Abort();
+					return null;
+				}
+				if (webRequest.result == UnityWebRequest.Result.Success) {
 
+					
+					return webRequest.downloadHandler.text;
+
+				}
 			}
 			return null;
 		}
 
-	
+
 
 		private void OnDestroy() {
 			tokenSource?.Cancel();

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb80015344207c749863f0495ccf2f6b, type: 3}
+  m_Name: maze2
+  m_EditorClassIdentifier: 
+  gameData:
+    playerSpeed: 10
+    playerRotationSpeed: 10
+    boardUrl: \Assets\Sprites\Levels\maze2.png
+    useUrl: 0
+    board: {fileID: 109971904683980034, guid: 6dbca8e7050fe1b41a4bea4ddbf47a37, type: 3}
+    boardPPU: 100
+    playerStart: {x: 4, y: 4}
+    cellsize: {x: 32, y: 32}
+    maxWaypoints: 2048
+    border: {r: 0, g: 0, b: 0, a: 1}
