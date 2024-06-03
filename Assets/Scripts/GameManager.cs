@@ -71,8 +71,13 @@ public class GameManager : MonoBehaviour {
 		gameData = (config == null)? await configLoader.LoadConfig(): config.gameData ;	
 
 		boardGo = new GameObject("Board");
+		var trail = player.go.GetComponent<TrailRenderer>();
+		trail.enabled = false;
+		boardGo.transform.Translate(Vector3.forward);
+		trail.enabled = true;
 		var sr = boardGo.AddComponent<SpriteRenderer>();
 		sr.sortingOrder = -10;
+		
 		sr.sprite = gameData.board;
 		grid = new Grid(gameData.board, gameData.cellsize, gameData.border);
 
